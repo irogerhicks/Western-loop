@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Western Loop">
+<title>Big Western Loop 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d1b2a 0%, #1a2e3d 40%, #0d2318 100%);
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #e8dcc8;
+  padding-bottom: 40px;
+}
+.sticky-header {
+  background: linear-gradient(135deg, #1a3a2a 0%, #0d2318 100%);
+  border-bottom: 1px solid rgba(200,160,80,0.3);
+  padding: 52px 16px 14px;
+  position: sticky; top: 0; z-index: 100;
+}
+.trip-label { font-size: 11px; letter-spacing: 3px; color: #c8a050; text-transform: uppercase; margin-bottom: 4px; }
+.trip-title { font-size: 20px; font-weight: bold; color: #f0e4c0; }
+.trip-sub { font-size: 12px; color: #9aaa8a; margin-top: 2px; }
+#day-list { padding: 12px 12px 0; }
+details.day-card {
+  border-radius: 12px; margin-bottom: 10px;
+  border: 1px solid rgba(200,160,80,0.15);
+  background: linear-gradient(135deg, rgba(30,50,40,0.4), rgba(15,25,20,0.95));
+  overflow: hidden;
+}
+details.warning-card {
+  background: linear-gradient(135deg, rgba(180,60,20,0.15), rgba(30,20,15,0.95));
+  border-color: rgba(200,80,40,0.4);
+}
+details.layover-card {
+  background: linear-gradient(135deg, rgba(60,100,80,0.2), rgba(15,25,20,0.95));
+}
+details summary {
+  list-style: none; cursor: pointer; padding: 14px;
+}
+details summary::-webkit-details-marker { display: none; }
+details[open] summary {
+  border-bottom: 1px solid rgba(200,160,80,0.15);
+}
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.card-left { flex: 1; }
+.card-badges { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }
+.badge-day { color: white; border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: bold; font-family: monospace; }
+.badge-date { font-size: 11px; color: #9aaa8a; }
+.badge-layover { font-size: 10px; color: #7aaa9a; background: rgba(80,140,100,0.2); border-radius: 4px; padding: 1px 6px; }
+.card-title { font-size: 15px; font-weight: bold; color: #f0e4c0; margin-bottom: 2px; }
+.card-dest { font-size: 12px; color: #9aaa8a; }
+.card-right { text-align: right; min-width: 64px; margin-left: 8px; }
+.card-miles { font-size: 18px; font-weight: bold; color: #c8a050; }
+.card-miles-label { font-size: 10px; color: #9aaa8a; }
+.heat-badge { display: inline-block; margin-top: 4px; font-size: 10px; border-radius: 4px; padding: 2px 5px; }
+.detail-body { padding: 14px; }
+.warning-banner {
+  background: rgba(180,60,20,0.2); border: 1px solid rgba(200,80,40,0.5);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;
+  font-size: 13px; color: #f0a080; line-height: 1.5;
+}
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.stat-box {
+  background: rgba(30,50,40,0.5); border: 1px solid rgba(200,160,80,0.15);
+  border-radius: 10px; padding: 10px 12px;
+}
+.stat-box.full-width { grid-column: 1 / -1; }
+.stat-label { font-size: 10px; color: #9aaa8a; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+.stat-val { font-size: 13px; color: #e8dcc8; line-height: 1.3; }
+.stat-val.small { font-size: 12px; }
+.miles-callout {
+  background: linear-gradient(135deg, rgba(200,160,80,0.12), rgba(30,50,40,0.6));
+  border: 1px solid rgba(200,160,80,0.3);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.miles-big { font-size: 32px; font-weight: bold; color: #c8a050; line-height: 1; }
+.miles-sub { font-size: 12px; color: #9aaa8a; }
+.miles-route { flex: 1; font-size: 13px; color: #b8c8a0; line-height: 1.4; }
+.detail-section {
+  background: rgba(20,35,28,0.7); border: 1px solid rgba(200,160,80,0.12);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+}
+.section-label { font-size: 11px; color: #9aaa8a; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+.section-content { font-size: 14px; color: #ddd0b0; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="sticky-header">
+  <div class="trip-label">🌲 Big Western Loop 2026</div>
+  <div class="trip-title">Julie, Roger &amp; Elliott</div>
+  <div class="trip-sub">Jun 19 – Jul 14 · 26 Days · 4,825 Miles · 14 States</div>
+</div>
+<div id="day-list">
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7C9B">Day 1</span>
+          <span class="badge-date">Fri Jun 19</span>
+          
+        </div>
+        <div class="card-title">The Cascade Climb</div>
+        <div class="card-dest">Roslyn, WA</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">128</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#4CAF5022;color:#4CAF50;border:1px solid #4CAF5055">Low</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Roslyn, WA – Roslyn area campground</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">0' → 3,022' → 2,220'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">74°F / 48°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#4CAF50;font-weight:bold">Low</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">128</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Port Orchard, WA → Roslyn, WA</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Snoqualmie Pass and transition from lush westside forests to dry ponderosa pine east of the crest.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Roslyn Historic Cemeteries · Historic downtown Roslyn</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Coal Mines Trail or Slackline Trail (~2.5 mi, easy)</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">The Brick Saloon, Roslyn Cafe</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Expect heavier Friday traffic on I-90. Leave no later than 9 am. Tow/haul recommended.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">TBD – Roslyn rally fee</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$53</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Wild</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Alpine Animal Hospital, Cle Elum</div></div>
+  </div>
+</details>
+<details class="day-card layover-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7C9B">Day 2</span>
+          <span class="badge-date">Sat Jun 20</span>
+          <span class="badge-layover">LAYOVER</span>
+        </div>
+        <div class="card-title">Roslyn Vintage Trailer Rally</div>
+        <div class="card-dest">Roslyn, WA</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">–</div>
+        <div class="card-miles-label">layover</div>
+        <span class="heat-badge" style="background:#8BC34A22;color:#8BC34A;border:1px solid #8BC34A55">Low–Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Roslyn, WA – same campsite</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">~2,220'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">76°F / 50°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#8BC34A;font-weight:bold">Low–Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">–</div>
+        <div class="miles-sub">layover</div>
+      </div>
+      <div class="miles-route">Roslyn, WA → Roslyn, WA</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Forested foothills of the eastern Cascades with easy lake access.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Roslyn Farmers Market · Roslyn Museum</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Slackline Trail or Cle Elum Lake shoreline</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Basecamp Books &amp; Bites</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">True rest day. Rally day!</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">TBD – Vintage Trailer Rally fee</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$0</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Smoke Signals</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Alpine Animal Hospital, Cle Elum</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#5B8C5A">Day 3</span>
+          <span class="badge-date">Sun Jun 21</span>
+          
+        </div>
+        <div class="card-title">The Columbia &amp; High Plateau</div>
+        <div class="card-dest">Prineville, OR</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">279</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Crook County RV Park – 1040 S Main St, Prineville, OR</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">2,220' → 200' → 2,867'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">84°F / 52°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">279</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Roslyn, WA → Prineville, OR</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Yakima River Canyon basalt cliffs, Columbia Gorge, high desert plateaus.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Maryhill Museum of Art · Maryhill Stonehenge WWI memorial</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Barnes Butte Trails (~3.2 mi) near Prineville</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Tastee Treet in Prineville</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Take Yakima River Canyon (WA-821) over I-82. US-97 south has long climbs – watch temps.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$53.50 – Crook County RV Park</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$116</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">The River Wild</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Animal Emergency Center, Bend</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#5B8C5A">Day 4</span>
+          <span class="badge-date">Mon Jun 22</span>
+          <span>⚠️</span>
+        </div>
+        <div class="card-title">The Oregon Outback</div>
+        <div class="card-dest">Frenchglen, OR</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">192</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF572222;color:#FF5722;border:1px solid #FF572255">High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">Zero services 60+ miles in 95°F+. Fuel and water in Burns mandatory.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Page Springs Campground – Steens Mountain CMA, ~3 mi south of Frenchglen</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">2,867' → 4,200'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">88°F / 54°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF5722;font-weight:bold">High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">192</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Prineville, OR → Frenchglen, OR</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">High desert with Steens Mountain rising dramatically from the basin.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Malheur National Wildlife Refuge · Frenchglen Hotel historic site</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Blitzen River Trail (~3.0 mi)</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Frenchglen Hotel Family-Style Dinner (reservation required)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fill all 30 gal water in Prineville. Fuel in Burns. Rough pavement near campground.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$16 – Page Springs CG, BLM</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$80</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Nomadland</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Back in Burns – no close emergency options</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#C4922A">Day 5</span>
+          <span class="badge-date">Tue Jun 23</span>
+          <span>⚠️</span>
+        </div>
+        <div class="card-title">The Loneliest Road</div>
+        <div class="card-dest">Hickison Petroglyphs, NV</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">341</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF572222;color:#FF5722;border:1px solid #FF572255">High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">CRITICAL: Austin to Ely (147 mi) – ZERO services. Fuel gauge is a hard constraint.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Hickison Petroglyph Recreation Area – US-50 east of Austin, NV</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">4,200' → 7,484' → 6,540'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">92°F / 58°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF5722;font-weight:bold">High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">341</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Frenchglen, OR → Hickison Petroglyphs, NV</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Nevada's basin-and-range: repeating wide valleys and mountain ridges, deeply quiet.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Hickison Petroglyphs – at camp · Stokes Castle optional detour</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Hickison Interpretive Loop (~1.5 mi) with rock art</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Lucky Spur Saloon, Kingston (detour if energy permits)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel at every station. Watch crosswinds on US-50.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$0 – BLM dispersed (free)</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$142</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Vanishing Point</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Elko Veterinary Clinic (northeast, sparse)</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#C4922A">Day 6</span>
+          <span class="badge-date">Wed Jun 24</span>
+          
+        </div>
+        <div class="card-title">The Great Basin</div>
+        <div class="card-dest">Great Basin NP, NV</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">192</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Lower Lehman Creek Campground – Great Basin National Park, NV</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">6,540' → 7,300'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">82°F / 50°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">192</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Hickison, NV → Great Basin NP, NV</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Climb from sagebrush desert into forested flanks of the Snake Range.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Lehman Caves tour (advance ticket required)</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Alpine Lakes Loop (~2.7 mi) starting ~10,000' – spectacular but high altitude</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Kerouac's in Baker</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel in Eureka or Ely. Narrow park road on final climb; watch for wildlife.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$10 – Lower Lehman Creek CG</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$80</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">127 Hours</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Ely has the closest vet options</div></div>
+  </div>
+</details>
+<details class="day-card layover-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#C4922A">Day 7</span>
+          <span class="badge-date">Thu Jun 25</span>
+          <span class="badge-layover">LAYOVER</span>
+        </div>
+        <div class="card-title">Great Basin Layover</div>
+        <div class="card-dest">Great Basin NP, NV</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">–</div>
+        <div class="card-miles-label">layover</div>
+        <span class="heat-badge" style="background:#8BC34A22;color:#8BC34A;border:1px solid #8BC34A55">Low–Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Lower Lehman Creek Campground – Great Basin NP</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">7,300' / hikes to 10,000'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">80°F / 48°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#8BC34A;font-weight:bold">Low–Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">–</div>
+        <div class="miles-sub">layover</div>
+      </div>
+      <div class="miles-route">Great Basin NP, NV → Great Basin NP, NV</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Ancient bristlecone pine groves and high alpine terrain.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Bristlecone Pine Grove – oldest living trees on Earth</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Bristlecone Trail (~2.8 mi), high altitude, moderate grade</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Repeat Kerouac's or camp meals</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Take it easy due to altitude. Hydrate. Exceptional Milky Way stargazing after dark.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$10 – Lower Lehman Creek CG</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$10</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Nomadland (if not watched Day 4)</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Ely remains nearest vet hub</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#8B4B8C">Day 8</span>
+          <span class="badge-date">Fri Jun 26</span>
+          
+        </div>
+        <div class="card-title">The Highest Night</div>
+        <div class="card-dest">Anderson Meadow, UT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">139</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#4CAF5022;color:#4CAF50;border:1px solid #4CAF5055">Low</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Anderson Meadow Campground – Beaver, UT (Fishlake National Forest)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">7,300' → 9,354'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">68°F / 38°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#4CAF50;font-weight:bold">Low</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">139</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Great Basin NP, NV → Anderson Meadow, UT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Green, high-elevation Tushar Mountains – a different Utah than the red-rock stereotype.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Cove Fort visit · Anderson Meadow lakeside</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Anderson Meadow Loop (~2.0 mi) around alpine reservoir</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">The Creamery in Beaver (cheese curds, ice cream)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel and water in Beaver (mountain-fed, excellent). Steep climb into Tushars – monitor transmission.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$20 – Anderson Meadow CG, Fishlake NF</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$58</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Jeremiah Johnson</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Basic vet services in Beaver</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#8B4B8C">Day 9</span>
+          <span class="badge-date">Sat Jun 27</span>
+          <span>⚠️</span>
+        </div>
+        <div class="card-title">Into the Red Rocks</div>
+        <div class="card-dest">Arches NP, UT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">270</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#B71C1C22;color:#B71C1C;border:1px solid #B71C1C55">Extreme</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">⚠️ PAC HIGH RISK – extreme heat + significant elevation change. See Julie PAC protocol.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Devils Garden Campground – Arches National Park, UT</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">9,354' → 4,000'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">104°F / 68°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#B71C1C;font-weight:bold">Extreme</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">270</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Anderson Meadow, UT → Arches NP, UT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">High mountains dropping into Utah's red-rock country via Capitol Reef.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Capitol Reef scenic drive on UT-24 · Gifford House (pie)</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Evening Landscape Arch (~1.6 mi) after worst heat</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Moab options after camp setup</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">LONG descent to Moab – use low gears, plan mid-descent brake check. Enter park before 7 am on Day 10.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$25 – Devils Garden CG, Arches NP</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$112</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Thelma &amp; Louise</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Moab Veterinary Clinic</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#8B4B8C">Day 10</span>
+          <span class="badge-date">Sun Jun 28</span>
+          <span class="badge-layover">LAYOVER</span><span>⚠️</span>
+        </div>
+        <div class="card-title">Arches / Canyonlands (Plan A/B)</div>
+        <div class="card-dest">Arches NP, UT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">–</div>
+        <div class="card-miles-label">layover</div>
+        <span class="heat-badge" style="background:#B71C1C22;color:#B71C1C;border:1px solid #B71C1C55">Extreme</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">⚠️ PAC HIGH RISK – extreme desert heat. No midday hikes. Exhale-breathing protocol ready.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Devils Garden CG (Plan A) / Superbowl or BLM dispersed (Plan B)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">~4,000'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">100–104°F / 68°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#B71C1C;font-weight:bold">Extreme</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">–</div>
+        <div class="miles-sub">layover</div>
+      </div>
+      <div class="miles-route">Arches NP, UT → Arches NP, UT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Iconic sandstone arches, fins, and domes.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Delicate Arch at sunset · Windows Section / Double Arch</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Delicate Arch (timed for evening), Windows Section, Double Arch</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Milt's Stop &amp; Eat (burgers and shakes)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Enter park before 7 am. Avoid midday for Elliott – use booties. Hike at golden hour only.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$25 Plan A / $15 Plan B</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$10</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">The Searchers</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Moab Veterinary Clinic</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#8B4B8C">Day 11</span>
+          <span class="badge-date">Mon Jun 29</span>
+          <span>⚠️</span>
+        </div>
+        <div class="card-title">The Needles District</div>
+        <div class="card-dest">Needles CG, UT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">101</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#E5393522;color:#E53935;border:1px solid #E5393555">High–Extreme midday</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">⚠️ PAC MODERATE-HIGH RISK – still desert heat. Pace carefully.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">The Needles Campground – Canyonlands NP, UT</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">4,000' → 5,000'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">100°F / 64°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#E53935;font-weight:bold">High–Extreme midday</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">101</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Arches NP, UT → Needles CG, UT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Indian Creek corridor walls and jagged Needles skyline.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Newspaper Rock petroglyph panel</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Pothole Point (~0.6 mi) for wide Needles views</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Camp food – no services at Needles. Bring lunches from Moab.</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel in Moab before leaving. Remote beyond that. Limited shade – carry extra water.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">~$10 – Needles CG or dispersed BLM</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$42</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Planet of the Apes (1968)</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Moab is nearest meaningful option</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#7B5EA7">Day 12</span>
+          <span class="badge-date">Tue Jun 30</span>
+          
+        </div>
+        <div class="card-title">Ancestral Cities</div>
+        <div class="card-dest">Mesa Verde NP, CO</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">172</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Morefield Campground – Mesa Verde National Park, CO</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">5,000' → 7,800'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">88°F / 56°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">172</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Needles, UT → Mesa Verde NP, CO</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Utah red rock transitioning to forested mesas of southwest Colorado.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Cliff Palace ranger-led tour (reservation required) · Hovenweep en route</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short mesa-top nature trails</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Metate Room (if open) or camp meals</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Via Hovenweep. Winding ascent into Mesa Verde – lower gears. Book Cliff Palace tour via recreation.gov.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$56 – Morefield CG, Mesa Verde NP</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$72</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Butch Cassidy and the Sundance Kid</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Cortez / Durango area vets</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#7B5EA7">Day 13</span>
+          <span class="badge-date">Wed Jul 1</span>
+          
+        </div>
+        <div class="card-title">San Juan Soaks</div>
+        <div class="card-dest">Pagosa Springs, CO</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">112</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Your chosen RV park in Pagosa Springs, CO</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">7,800' → 7,126'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">84°F / 48°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">112</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Mesa Verde, CO → Pagosa Springs, CO</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">San Juan Mountains' jagged peaks and river valleys.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Pagosa Hot Springs soak</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short trails near Pagosa or riverwalk loops</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Steamworks Brewing in Durango</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Major grocery and fuel restock in Durango. US-160 has some grades but manageable.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$55 – Last Resort RV Park or similar</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$47</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">True Grit (2010)</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Riverview Animal Hospital, Durango</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#9B5B4A">Day 14</span>
+          <span class="badge-date">Thu Jul 2</span>
+          
+        </div>
+        <div class="card-title">High Desert Plains</div>
+        <div class="card-dest">Bernalillo, NM</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">187</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF572222;color:#FF5722;border:1px solid #FF572255">High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Coronado Campground – 1901 NM-313, Bernalillo, NM 87004</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">7,126' → 5,050'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">92°F / 65°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF5722;font-weight:bold">High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">187</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Pagosa Springs, CO → Bernalillo, NM</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Rio Grande valley and wide open plains framed by distant mountain ranges.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Coronado Historic Site and Painted Kiva · Santa Fe en route</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short interpretive paths at Coronado Site</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">The Range Cafe, Bernalillo (green chile cheeseburgers)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Via Santa Fe sightseeing stop. Fuel in Chama/Española. Watch heat for dog.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$35 – Coronado Campground</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$63</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">The Milagro Beanfield War</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Multiple vet options in Albuquerque metro</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#9B5B4A">Day 15</span>
+          <span class="badge-date">Fri Jul 3</span>
+          
+        </div>
+        <div class="card-title">Route 66 Neon</div>
+        <div class="card-dest">Tucumcari, NM</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">196</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF572222;color:#FF5722;border:1px solid #FF572255">High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Blaze-in-Saddle RV Park, Tucumcari, NM</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">5,050' → 4,091'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">96°F / 68°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF5722;font-weight:bold">High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">196</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Bernalillo, NM → Tucumcari, NM</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Llano Estacado – vast Staked Plains, flat and expansive.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Tucumcari Murals · Blue Hole visit optional</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short walks at Blue Hole or in town (avoid midday)</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Del's Restaurant</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Route 66 Centennial 2026 – increased traffic expected. Nighttime neon drive worth it.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$50 – Blaze-in-Saddle RV Park</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$82</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">No Country for Old Men</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Regional small-animal vets in Santa Rosa/Clovis</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#B85C38">Day 16</span>
+          <span class="badge-date">Sat Jul 4</span>
+          
+        </div>
+        <div class="card-title">The Staked Plains – July 4th</div>
+        <div class="card-dest">Black Kettle Grasslands, OK</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">264</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF572222;color:#FF5722;border:1px solid #FF572255">High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Black Kettle National Grassland – near Cheyenne, OK</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">4,091' → 4,000'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">94°F / 72°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF5722;font-weight:bold">High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">264</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Tucumcari, NM → Black Kettle Grasslands, OK</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Endless golden grasslands moving in the wind.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Washita Battlefield National Historic Site · Cadillac Ranch, Amarillo</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Self-guided Washita Battlefield trail (short, interpretive)</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Amarillo options mid-route</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Cadillac Ranch early morning. Fuel in Amarillo before 10 am. Enter Central Time (lose 1 hour).</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$0 – Black Kettle National Grassland (free)</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$110</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Hell or High Water</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Small Animal Emergency Clinic, Amarillo</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#B8963E">Day 17</span>
+          <span class="badge-date">Sun Jul 5</span>
+          
+        </div>
+        <div class="card-title">Gunfighters &amp; Grains</div>
+        <div class="card-dest">Dodge City, KS</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">165</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF572222;color:#FF5722;border:1px solid #FF572255">High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">KOA Dodge City, KS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">4,000' → 2,493'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">94°F / 72°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF5722;font-weight:bold">High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">165</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Black Kettle, OK → Dodge City, KS</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Rolling Kansas farmland with grain elevators as skyscrapers of the plains.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Boot Hill Museum (recreated 1870s Front Street)</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short walks in Dodge City parks or riverfront</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Casey's Cowtown Club (steaks)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Easy mileage. Arrive early for major resupply – last big box store before Nebraska Sandhills.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$50 – KOA Dodge City</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$69</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Paper Moon</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Local vets in Dodge City</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#7A9B5A">Day 18</span>
+          <span class="badge-date">Mon Jul 6</span>
+          <span>⚠️</span>
+        </div>
+        <div class="card-title">The Long Nebraska Haul</div>
+        <div class="card-dest">Fort Robinson, NE</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">540</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">⚠️ LONGEST DAY – 540 miles. Sway warning: reduce to 55 mph immediately. No prize for early arrival.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Fort Robinson State Park – 3200 US-20, Crawford, NE 69339</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">2,493' → 3,780'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">90°F / 62°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">540</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Dodge City, KS → Fort Robinson, NE</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Nebraska Sandhills: grass-stabilized dunes stretching horizon to horizon.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Carhenge near Alliance · Fort Robinson – Crazy Horse historic site</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short evening walks around Fort Robinson grounds</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Roadside diners in Alliance/Chadron</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">LONGEST DAY – 540 mi, ~10 hrs. Mandatory breaks every 2 hrs. Bailout options: Alliance, Scottsbluff, Chadron.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$39.40 – Fort Robinson State Park</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$225</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">The Revenant</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Regional vets in Alliance and Chadron</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#5A7B9B">Day 19</span>
+          <span class="badge-date">Tue Jul 7</span>
+          
+        </div>
+        <div class="card-title">Wind Cave</div>
+        <div class="card-dest">Wind Cave NP, SD</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">82</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Elk Mountain Campground – Wind Cave National Park, SD</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">3,780' → 4,100'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">88°F / 60°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">82</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Fort Robinson, NE → Wind Cave NP, SD</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Black Hills rising abruptly from the plains – an island in the prairie.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Wind Cave ranger tour (book in advance – ~$12/person)</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Rankin Ridge (~1.0 mi) for wide three-state views</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Simple options in Hot Springs or Custer</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Short easy drive after brutal Day 18. Fuel in Crawford/Hot Springs.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$24 – Elk Mountain CG (Plan A)</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$34</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Dances with Wolves</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Dakota Hills Veterinary Clinic, Rapid City</div></div>
+  </div>
+</details>
+<details class="day-card warning-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#6B8B6B">Day 20</span>
+          <span class="badge-date">Wed Jul 8</span>
+          <span>⚠️</span>
+        </div>
+        <div class="card-title">The Bighorn Wall</div>
+        <div class="card-dest">Sibley Lake, WY</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">279</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#8BC34A22;color:#8BC34A;border:1px solid #8BC34A55">Low–Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    <div class="warning-banner">🐻 GRIZZLY TERRITORY begins. Bear spray required on all hikes. Elliott leashed at all times outside camp.</div>
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Sibley Lake Campground – Bighorn National Forest, WY</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">4,100' → 7,900'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">72°F / 44°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#8BC34A;font-weight:bold">Low–Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">279</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Wind Cave NP, SD → Sibley Lake, WY</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Massive alpine vistas climbing into and over the Bighorn Mountains.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Shell Falls overlook on US-14 · Medicine Wheel nearby</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Sibley Lake Shore (~2.1 mi) easy alpine loop</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Diner in Sheridan before heading up the grade</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">US-14 has 6–8% grades. Use LOW GEAR. DO NOT take US-14A (hazardous with trailer). Check Granite Pass (9,033') for snow.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$20 – Sibley Lake CG, Bighorn NF</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$116</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Thunderheart</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Sheridan / Rapid City region</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7B6B">Day 21</span>
+          <span class="badge-date">Thu Jul 9</span>
+          
+        </div>
+        <div class="card-title">Paradise Valley</div>
+        <div class="card-dest">Livingston, MT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">262</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Livingston, MT – your selected RV park or Vollum residence</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">7,900' → 4,500'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">82°F / 52°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">262</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Sibley Lake, WY → Livingston, MT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Absaroka and Bridger ranges, Yellowstone River corridor.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Livingston Depot Center · Downtown galleries</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Pine Creek Falls (~2.5–3 mi, shaded waterfall hike)</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Mark's In &amp; Out (classic burger stand), The Murray Bar</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel in Billings/Laurel. Watch for wildlife near river corridors. Full bear/grizzly territory.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$0 – Guests of Dan &amp; Ann Vollum</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$109</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Legends of the Fall</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">PETS Emergency, Bozeman</div></div>
+  </div>
+</details>
+<details class="day-card layover-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7B6B">Day 22</span>
+          <span class="badge-date">Fri Jul 10</span>
+          <span class="badge-layover">LAYOVER</span>
+        </div>
+        <div class="card-title">Livingston Layover – Day 1 with Vollums</div>
+        <div class="card-dest">Livingston, MT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">–</div>
+        <div class="card-miles-label">layover</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Livingston, MT – staying with Dan and Ann Vollum</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">~4,500'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">80°F / 50°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">–</div>
+        <div class="miles-sub">layover</div>
+      </div>
+      <div class="miles-route">Livingston, MT → Livingston, MT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Yellowstone River and surrounding ranges; Big Sky country.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Livingston Depot Center · Downtown art galleries &amp; bookstores</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Suce Creek Trail (~4 mi) into Absarokas or Pine Creek Falls again</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Mark's In &amp; Out, Murray Bar, local favorites</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Recovery and resupply. Top off everything before homeward push.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$0 – Guests of Dan &amp; Ann Vollum</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$15</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">A River Runs Through It</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">PETS Emergency, Bozeman; local Livingston clinics</div></div>
+  </div>
+</details>
+<details class="day-card layover-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7B6B">Day 23</span>
+          <span class="badge-date">Sat Jul 11</span>
+          <span class="badge-layover">LAYOVER</span>
+        </div>
+        <div class="card-title">Livingston Layover – Day 2 with Vollums</div>
+        <div class="card-dest">Livingston, MT</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">–</div>
+        <div class="card-miles-label">layover</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Livingston, MT – staying with Dan and Ann Vollum</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">~4,500'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">82°F / 52°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">–</div>
+        <div class="miles-sub">layover</div>
+      </div>
+      <div class="miles-route">Livingston, MT → Livingston, MT</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Yellowstone River country, Big Sky Montana.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Yellowstone River fishing (with license) · Easy bike rides around town</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Suce Creek Trail or leisurely river walk</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Local Livingston favorites</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Final recovery day. Last major hub before home – fuel and supplies topped off.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$0 – Guests of Dan &amp; Ann Vollum</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$15</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">A River Runs Through It (rewatch)</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">PETS Emergency, Bozeman</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7C9B">Day 24</span>
+          <span class="badge-date">Sun Jul 12</span>
+          
+        </div>
+        <div class="card-title">The Silver Valley</div>
+        <div class="card-dest">Heyburn State Park, ID</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">419</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FFC10722;color:#FFC107;border:1px solid #FFC10755">Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Heyburn State Park – 57 Chatcolet Rd, Plummer, ID 83851</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">4,500' → 2,100'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">86°F / 58°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FFC107;font-weight:bold">Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">419</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Livingston, MT → Heyburn State Park, ID</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Rocky Mountain passes, cedar forests, Lake Coeur d'Alene region.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Trail of the Coeur d'Alenes (paved bike trail)</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short spurs off the Trail of the Coeur d'Alenes bike path</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">The Snake Pit in Enaville (historic bar and BBQ)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel along I-90: Bozeman, Missoula, Coeur d'Alene. GAIN 1 HOUR returning to Pacific Time.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$56 – Heyburn SP, Site 17</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$175</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Smoke Signals</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Vet clinics in Coeur d'Alene / Spokane</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7C9B">Day 25</span>
+          <span class="badge-date">Mon Jul 13</span>
+          
+        </div>
+        <div class="card-title">The Scablands</div>
+        <div class="card-dest">Naches, WA</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">313</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#FF980022;color:#FF9800;border:1px solid #FF980055">Moderate–High</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Peninsula Campground – Lake Roosevelt area near Wilbur, WA</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">2,100' → 1,000'</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">88°F / 60°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#FF9800;font-weight:bold">Moderate–High</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">313</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Heyburn SP, ID → Naches, WA</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Channeled scablands carved by ancient glacial floods, then Yakima Valley.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Yakima Valley fruit stands</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Short walks at roadside viewpoints or state park loop en route</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Fresh fruit at Yakima Valley fruit stands (cherries/peaches)</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Fuel through Spokane and Yakima. Eastern WA can be hot – limit midday asphalt for Elliott.</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">$0 – Peninsula CG, dispersed (free)</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$177</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Heaven's Gate</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Spokane and Yakima both have multiple vet options</div></div>
+  </div>
+</details>
+<details class="day-card">
+  <summary>
+    <div class="card-top">
+      <div class="card-left">
+        <div class="card-badges">
+          <span class="badge-day" style="background:#4A7C9B">Day 26</span>
+          <span class="badge-date">Tue Jul 14</span>
+          
+        </div>
+        <div class="card-title">Return Home</div>
+        <div class="card-dest">Port Orchard, WA</div>
+      </div>
+      <div class="card-right">
+        <div class="card-miles">197</div>
+        <div class="card-miles-label">miles</div>
+        <span class="heat-badge" style="background:#8BC34A22;color:#8BC34A;border:1px solid #8BC34A55">Low–Moderate</span>
+      </div>
+    </div>
+  </summary>
+  <div class="detail-body">
+    
+    <div class="stats-grid">
+      <div class="stat-box full-width">
+        <div class="stat-label">📍 Destination</div>
+        <div class="stat-val small">Port Orchard, WA – home</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">⛰️ Elevation</div>
+        <div class="stat-val">1,000' → sea level</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">🌡️ Temps</div>
+        <div class="stat-val">75°F / 55°F</div>
+      </div>
+      <div class="stat-box full-width">
+        <div class="stat-label">🔥 Heat Risk</div>
+        <div class="stat-val" style="color:#8BC34A;font-weight:bold">Low–Moderate</div>
+      </div>
+    </div>
+    <div class="miles-callout">
+      <div>
+        <div class="miles-big">197</div>
+        <div class="miles-sub">miles</div>
+      </div>
+      <div class="miles-route">Naches, WA → Port Orchard, WA</div>
+    </div>
+    <div class="detail-section"><div class="section-label">🌄 Scenery</div><div class="section-content">Final Cascades crossing back to western Washington forests and Puget Sound.</div></div>
+    <div class="detail-section"><div class="section-label">⭐ Top Picks</div><div class="section-content">Final high-view pullout for reflection</div></div>
+    <div class="detail-section"><div class="section-label">🥾 Hike</div><div class="section-content">Quick Snoqualmie Pass trailhead stroll if energy allows</div></div>
+    <div class="detail-section"><div class="section-label">🍽️ Eat</div><div class="section-content">Any stop along I-90 or save for home cooking</div></div>
+    <div class="detail-section"><div class="section-label">🗺️ Road Notes</div><div class="section-content">Aim to cross Snoqualmie Pass before noon. Construction at MP 68–70 (same as Day 1).</div></div>
+    <div class="detail-section"><div class="section-label">⛺ Camp / Cost</div><div class="section-content">Home!</div></div>
+    <div class="detail-section"><div class="section-label">💰 Fuel Est.</div><div class="section-content">$130</div></div>
+    <div class="detail-section"><div class="section-label">🎬 Evening Film</div><div class="section-content">Wild</div></div>
+    <div class="detail-section"><div class="section-label">🐾 Vet</div><div class="section-content">Full veterinary services back in home region</div></div>
+  </div>
+</details>
+</div>
+</body>
+</html>
